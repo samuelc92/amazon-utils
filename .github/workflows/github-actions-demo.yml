@@ -25,7 +25,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@vv1.1.1
+        uses: gittools/actions/gitversion/setup@v1.1.1
         with:
           versionSpec: '5.x'
       
