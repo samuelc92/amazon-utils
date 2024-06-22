@@ -30,7 +30,7 @@ jobs:
           versionSpec: '5.x'
       
       - name: Use GitVersion
-        run: gitversion /output json /output buildserver
+        run: gittools/actions/gitversion/execute@v1.1.1
         id: gitversion
 
       - run: echo "🎉 Version ${{ steps.gitversion.outputs.SemVer }}"
