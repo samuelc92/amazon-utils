@@ -2,9 +2,6 @@ name: Publish Nuget Package
 
 on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
-  push:
-    branches:
-      - 'main'       # Run the workflow when pushing to the main branch
   pull_request:
     branches:
       - 'main'       # Run the workflow when pushing to the main branch
@@ -19,11 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 8.0.x
-
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v1.1.1
         with:
@@ -33,4 +25,10 @@ jobs:
         uses: gittools/actions/gitversion/execute@v1.1.1
         id: gitversion
 
-      - run: echo "🎉 Version ${{ steps.gitversion.outputs.SemVer }}"
+      - name: Print Version
+        run: echo "🎉 Version ${{ steps.gitversion.outputs.SemVer }}"
+      
+      - name: Create git tag
+        run: |
+          git tag ${{ steps.gitversion.outputs.SemVer }}
+          git push origin ${{ steps.gitversion.outputs.SemVer }}
