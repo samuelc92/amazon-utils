@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'main'       # Run the workflow when pushing to the main branch
+      - 'develop'    # Run the workflow when pushing to the develop branch
 
 jobs:
   build:
@@ -29,6 +30,7 @@ jobs:
         run: echo "🎉 Version ${{ steps.gitversion.outputs.SemVer }}"
       
       - name: Create git tag
+        if: github.ref == 'refs/heads/main'
         run: |
           git tag v${{ steps.gitversion.outputs.SemVer }}
           git push origin v${{ steps.gitversion.outputs.SemVer }}
